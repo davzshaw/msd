@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="es"></html>
+<head>
+    <meta charset="UTF-8">
+    <title>LogiAI - Página de Inicio</title>
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+    <style>
+        /* Root Variables */
+        :root {
+            --primary-color: #113271;
+            --secondary-color: #ff5722;
+            --background-color: #f5f7fa;
+            --text-color: #333;
+            --font-family: 'Poppins', sans-serif;
+        }
+
+        /* Global Styles */
+        body {
+            margin: 0;
+            font-family: var(--font-family);
+            color: var(--text-color);
+            background-color: var(--background-color);
+        }
+        a {
+            text-decoration: none;
+            color: inherit;
+        }
+        /* Header */
+        header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 20px 50px;
+            background-color: #fff;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+        .logo {
+            color: var(--primary-color);
+        }
+        nav a {
+            margin-left: 30px;
+            font-size: 16px;
+            color: var(--text-color);
+        }
+        nav a:hover {
+            color: var(--primary-color);
+        }
+        /* Main Section */
+        main {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 100px 50px;
+        }
+        .hero-text {
+            max-width: 50%;
+        }
+        .hero-text h1 {
+            font-size: 48px;
+            line-height: 1.2;
+            margin-bottom: 20px;
+            color: var(--primary-color);
+        }
+        .hero-text p {
+            font-size: 18px;
+            margin-bottom: 40px;
+            color: #555;
+        }
+        .cta-button {
+            padding: 15px 30px;
+            font-size: 18px;
+            background-color: var(--secondary-color);
+            color: #fff;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+        .cta-button:hover {
+            background-color: #e64a19;
+        }
+        .hero-image {
+            max-width: 40%;
+        }
+        .hero-image img {
+            width: 100%;
+        }
+        /* Footer */
+        footer {
+            text-align: center;
+            padding: 20px;
+            background-color: #fff;
+            font-size: 14px;
+            color: #777;
+            border-top: 1px solid #e0e0e0;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="logo"><img style="width: 100px;" src="loguitopng.png" alt=""></div>
+        <nav>
+            <a href="login.html">Iniciar Sesión</a>
+            <a href="register.html">Registrarse</a>
+        </nav>
+    </header>
+    <main>
+        <div class="hero-text">
+            <h1>Optimiza Tu Logística con <span style="font-weight: bold;">LogiAI</span></h1>
+            <p>Aprovecha la última tecnología en AI para predecir la demanda y optimizar tus operaciones logísticas.</p>
+            <button class="cta-button" onclick="location.href='register.html'">Comenzar</button>
+        </div>
+        <div class="hero-image">
+            <!-- Placeholder Image -->
+            <img src="rc30v1-scm-demand-mgt-feature1.png" alt="Ilustración de Logística AI">
+        </div>
+    </main>
+    <footer>
+        &copy; 2024 LogiAI. Todos los derechos reservados.
+    </footer>
+</body>
+</html>

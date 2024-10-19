@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html lang="es"></html>
+<head>
+    <meta charset="UTF-8">
+    <title>LogiAI</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary-color: #113271;
+            --secondary-color: #ff5722;
+            --background-color: #f5f7fa;
+            --sidebar-color: #fff;
+            --text-color: #333;
+            --font-family: 'Poppins', sans-serif;
+        }
+
+        body {
+            margin: 0;
+            font-family: var(--font-family);
+            color: var(--text-color);
+            display: flex;
+            height: 100vh;
+            background-color: var(--background-color);
+        }
+        a {
+            text-decoration: none;
+            color: inherit;
+        }
+        /* Sidebar */
+        .sidebar {
+            width: 250px;
+            background-color: var(--sidebar-color);
+            padding: 20px;
+            box-shadow: 2px 0 5px rgba(0,0,0,0.1);
+        }
+        .sidebar .logo {
+            font-size: 24px;
+            font-weight: 600;
+            color: var(--primary-color);
+            margin-bottom: 40px;
+            text-align: center;
+        }
+        .sidebar nav a {
+            display: block;
+            padding: 15px 20px;
+            margin-bottom: 10px;
+            border-radius: 8px;
+            color: var(--text-color);
+            transition: background-color 0.3s;
+        }
+        .sidebar nav a:hover {
+            background-color: var(--background-color);
+        }
+        /* Main Content */
+        .main-content {
+            flex-grow: 1;
+            padding: 40px;
+            overflow-y: auto;
+        }
+        .main-content h2 {
+            font-size: 28px;
+            margin-bottom: 30px;
+            color: var(--primary-color);
+        }
+        /* Predict Section */
+        .predict-section {
+            display: flex;
+            align-items: center;
+            margin-bottom: 40px;
+        }
+        .predict-section input {
+            padding: 12px;
+            font-size: 16px;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            margin-right: 20px;
+        }
+        .predict-section .predict-button {
+            padding: 12px 30px;
+            background-color: var(--secondary-color);
+            color: #fff;
+            border: none;
+            border-radius: 8px;
+            font-size: 16px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+        .predict-section .predict-button:hover {
+            background-color: #e64a19;
+        }
+        .upload-section {
+            margin-bottom: 40px;
+        }
+        .upload-section label {
+            padding: 12px 30px;
+            background-color: var(--primary-color);
+            color: #fff;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 16px;
+            display: inline-block;
+            transition: background-color 0.3s;
+        }
+        .upload-section label:hover {
+            background-color: #003d99;
+        }
+        .upload-section input[type="file"] {
+            display: none;
+        }
+        /* Charts */
+        .charts {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+        }
+        .chart-card {
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 12px;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.05);
+            min-height: 300px;
+            position: relative;
+        }
+        .chart-card::after {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            color: #bbb;
+            font-size: 18px;
+        }
+    </style>
+</head>
+<body>
+    <div class="sidebar">
+        <div class="logo"><img style="width: 100px;" src="loguitopng.png" alt=""></div>
+        <nav>
+            <a href="#"><b>Panel de Control</b></a>
+            <a href="manage-data.html">Subir y gestionar Datos</a>
+            <a href="user-management.html">Gestionar Usuarios</a>
+            <a href="index.html">Cerrar Sesión</a>
+        </nav>
+    </div>
+    <div class="main-content">
+        <h2>Bienvenido a LogiAI, [Nombre de Usuario]</h2>
+        <div class="predict-section">
+            <input type="date">
+            <button class="predict-button">Predecir Demanda</button>
+        </div>
+        <div class="charts">
+            <div class="chart-card"><img src="chart1.png" alt=""></div>
+            <div class="chart-card"><img src="chart2.png" alt=""></div>
+            <div class="chart-card"><img src="chart3.png" alt=""></div>
+            <div class="chart-card"><img src="chart4.png" alt=""></div>
+        </div>
+    </div>
+</body>
+</html>

@@ -1,0 +1,123 @@
+/* General Styles */
+body {
+    margin: 0;
+    font-family: Arial, sans-serif;
+    color: #333;
+}
+
+header, footer {
+    background-color: #f8f8f8;
+    padding: 20px;
+}
+
+h1, h2, h3 {
+    margin: 0;
+}
+
+nav {
+    margin-top: 10px;
+}
+
+nav a {
+    margin-right: 15px;
+    text-decoration: none;
+    color: #333;
+}
+
+main {
+    padding: 40px 20px;
+}
+
+.btn {
+    display: inline-block;
+    padding: 10px 20px;
+    background-color: #007BFF;
+    color: #fff;
+    text-decoration: none;
+    margin-top: 20px;
+}
+
+/* Landing Page */
+.intro {
+    text-align: center;
+    max-width: 600px;
+    margin: 0 auto;
+}
+
+.intro p {
+    font-size: 1.1em;
+    color: #666;
+}
+
+/* Form Styles */
+.form-container {
+    max-width: 400px;
+    margin: 0 auto;
+}
+
+.form-container h2 {
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+.form-container form {
+    display: flex;
+    flex-direction: column;
+}
+
+.form-container label {
+    margin-top: 10px;
+}
+
+.form-container input, .form-container select {
+    padding: 10px;
+    margin-top: 5px;
+    border: 1px solid #ccc;
+}
+
+.form-container button {
+    padding: 10px;
+    margin-top: 20px;
+    background-color: #007BFF;
+    color: #fff;
+    border: none;
+}
+
+.form-container p {
+    text-align: center;
+    margin-top: 20px;
+}
+
+/* Dashboard Styles */
+.dashboard h2 {
+    text-align: center;
+    margin-bottom: 40px;
+}
+
+.dashboard section {
+    margin-bottom: 40px;
+}
+
+.data-upload, .demand-prediction {
+    text-align: center;
+}
+
+.data-upload input, .demand-prediction input {
+    margin-top: 10px;
+}
+
+.data-upload button, .demand-prediction button {
+    margin-top: 20px;
+    padding: 10px 20px;
+}
+
+.graph-display .graph-placeholder {
+    width: 100%;
+    height: 300px;
+    background-color: #f0f0f0;
+    color: #999;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.2em;
+}
