@@ -2,7 +2,7 @@
 <html lang="es">
 <head>
     <meta charset="UTF-8">
-    <title>Gestión de Usuarios</title>
+    <title>Logistics AI - Gestión de Usuarios</title>
     <!-- Google Fonts -->
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
     <style>
@@ -21,15 +21,15 @@
             margin: 0;
             font-family: var(--font-family);
             color: var(--text-color);
-            background-color: var(--background-color);
             display: flex;
+            height: 100vh;
+            background-color: var(--background-color);
         }
         a {
             text-decoration: none;
             color: inherit;
         }
-
-        /* Estilos de la Barra Lateral */
+        /* Barra Lateral */
         .sidebar {
             width: 250px;
             background-color: var(--sidebar-color);
@@ -60,133 +60,110 @@
             background-color: var(--background-color);
             font-weight: 600;
         }
-
-        /* Estilos del Contenido Principal */
+        /* Contenido Principal */
         .main-content {
             margin-left: 270px;
             padding: 40px;
-            flex-grow: 1;
+            overflow-y: auto;
+            width: calc(100% - 270px);
         }
         .main-content h2 {
             font-size: 28px;
             margin-bottom: 30px;
             color: var(--primary-color);
         }
-        .hidden {
-            display: none;
+        /* Estilos para la Gestión de Usuarios */
+        .user-management {
+            background-color: #fff;
+            padding: 30px;
+            border-radius: 12px;
         }
-
-        /* Estilos de la Lista de Usuarios */
-        .add-user-button {
-            padding: 10px 20px;
-            background-color: var(--secondary-color);
+        .upload-section {
+            margin-bottom: 30px;
+        }
+        .upload-section label {
+            padding: 12px 30px;
+            background-color: var(--primary-color);
             color: #fff;
-            border: none;
             border-radius: 8px;
             cursor: pointer;
             font-size: 16px;
+            display: inline-block;
             transition: background-color 0.3s;
-            margin-bottom: 20px;
         }
-        .add-user-button:hover {
-            background-color: #e64a19;
+        .upload-section label:hover {
+            background-color: #003d99;
         }
-        table {
+        .upload-section input[type="file"] {
+            display: none;
+        }
+        .user-list {
+            margin-top: 20px;
+        }
+        .user-list table {
             width: 100%;
             border-collapse: collapse;
             background-color: #fff;
             border-radius: 12px;
             overflow: hidden;
         }
-        th, td {
+        .user-list th, .user-list td {
             padding: 15px;
             text-align: left;
             color: #555;
         }
-        th {
+        .user-list th {
             background-color: var(--primary-color);
             color: #fff;
         }
-        tr:nth-child(even) {
+        .user-list tr:nth-child(even) {
             background-color: #f5f7fa;
         }
-        .action-buttons button {
+        .delete-button {
             padding: 6px 12px;
-            margin-right: 5px;
+            background-color: #dc3545;
+            color: #fff;
             border: none;
             border-radius: 6px;
             cursor: pointer;
             font-size: 14px;
         }
-        .view-button {
-            background-color: var(--primary-color);
-            color: #fff;
-        }
-        .edit-button {
-            background-color: #28a745;
-            color: #fff;
-        }
-        .delete-button {
-            background-color: #dc3545;
-            color: #fff;
-        }
-        .action-buttons button:hover {
+        .delete-button:hover {
             opacity: 0.9;
         }
-
-        /* Estilos del Formulario */
-        .user-form {
-            background-color: #fff;
-            padding: 30px;
-            border-radius: 12px;
-            max-width: 600px;
-        }
-        .user-form label {
-            display: block;
-            margin-bottom: 8px;
-            color: #555;
-            font-weight: 500;
-        }
-        .user-form input, .user-form select {
-            width: 100%;
-            padding: 12px;
-            margin-bottom: 20px;
-            border: 1px solid #ddd;
-            border-radius: 8px;
-            font-size: 16px;
-        }
-        .user-form .form-buttons {
-            display: flex;
-            justify-content: flex-end;
-        }
-        .user-form .form-buttons button {
-            padding: 12px 20px;
-            border: none;
-            border-radius: 8px;
-            font-size: 16px;
-            cursor: pointer;
-            margin-left: 10px;
-        }
-        .save-button {
+        /* Botón para descargar JSON */
+        #downloadJsonButton {
+            padding: 12px 30px;
             background-color: var(--primary-color);
             color: #fff;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 16px;
+            display: inline-block;
+            margin-top: 20px;
+            transition: background-color 0.3s;
         }
-        .cancel-button, .back-button {
-            background-color: #6c757d;
-            color: #fff;
-        }
-        .create-button {
-            background-color: var(--secondary-color);
-            color: #fff;
-        }
-        .save-button:hover {
+        #downloadJsonButton:hover {
             background-color: #003d99;
         }
-        .cancel-button:hover, .back-button:hover {
-            background-color: #5a6268;
+        /* Botón para eliminar todo */
+        #deleteAllButton {
+            padding: 12px 30px;
+            background-color: #dc3545;
+            color: #fff;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 16px;
+            display: inline-block;
+            margin-top: 20px;
+            transition: background-color 0.3s;
         }
-        .create-button:hover {
-            background-color: #e64a19;
+        #deleteAllButton:hover {
+            background-color: #c82333;
+        }
+        /* Ocultar Secciones */
+        .hidden {
+            display: none;
         }
     </style>
 </head>
@@ -195,138 +172,127 @@
     <div class="sidebar">
         <div class="logo"><img style="width: 100px;" src="loguitopng.png" alt=""></div>
         <nav>
-            <a href="dashboard.html">Panel de Control</a>
-            <a href="manage-data.html">Subir y gestionar datos</a>
-            <a href="#"><b>Gestión de Usuarios</b></a>
+            <a href="#"><b>Panel de Control</b></a>
+            <a href="manage-data.html">Subir y gestionar Datos</a>
+            <a href="user-management.html">Gestionar Usuarios</a>
             <a href="index.html">Cerrar Sesión</a>
         </nav>
     </div>
-
     <!-- Contenido Principal -->
     <div class="main-content">
-        <!-- Sección de Lista de Usuarios -->
-        <div id="userList">
+        <!-- Sección de Gestión de Usuarios -->
+        <div id="userManagement" class="active">
             <h2>Gestión de Usuarios</h2>
-            <button class="add-user-button" onclick="showSection('createUser')">Agregar Nuevo Usuario</button>
-            <table id="userTable">
-                <thead>
-                    <tr>
-                        <th>ID</th>
-                        <th>Nombre</th>
-                        <th>Email</th>
-                        <th>Acciones</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <!-- Las filas de los usuarios se agregarán aquí -->
-                </tbody>
-            </table>
-        </div>
-
-        <!-- Sección de Detalle/Edición de Usuario -->
-        <div id="userDetail" class="hidden">
-            <h2 id="userDetailTitle">Detalle de Usuario</h2>
-            <div class="user-form">
-                <form>
-                    <label for="user-id">ID de Usuario</label>
-                    <input type="text" id="user-id" disabled>
-                    <label for="full-name">Nombre Completo</label>
-                    <input type="text" id="full-name">
-                    <label for="email">Correo Electrónico</label>
-                    <input type="email" id="email">
-                    <label for="role">Rol</label>
-                    <select id="role">
-                        <option value="admin">Administrador</option>
-                        <option value="user">Usuario</option>
-                    </select>
-                    <div class="form-buttons">
-                        <button type="button" class="back-button" onclick="showSection('userList')">Volver</button>
-                        <button type="submit" class="save-button">Guardar Cambios</button>
-                    </div>
-                </form>
-            </div>
-        </div>
-
-        <!-- Sección de Crear Usuario -->
-        <div id="createUser" class="hidden">
-            <h2>Crear Nuevo Usuario</h2>
-            <div class="user-form">
-                <form>
-                    <label for="create-full-name">Nombre Completo</label>
-                    <input type="text" id="create-full-name" placeholder="Ingresa el nombre completo">
-                    <label for="create-email">Correo Electrónico</label>
-                    <input type="email" id="create-email" placeholder="Ingresa el correo electrónico">
-                    <label for="create-password">Contraseña</label>
-                    <input type="password" id="create-password" placeholder="Crea una contraseña">
-                    <label for="create-role">Rol</label>
-                    <select id="create-role">
-                        <option value="admin">Administrador</option>
-                        <option value="user" selected>Usuario</option>
-                    </select>
-                    <div class="form-buttons">
-                        <button type="button" class="cancel-button" onclick="showSection('userList')">Cancelar</button>
-                        <button type="submit" class="create-button">Crear Usuario</button>
-                    </div>
-                </form>
+            <div class="user-management">
+                <div class="upload-section">
+                    <label for="file-upload">Subir Archivo CSV</label>
+                    <input type="file" id="file-upload" accept=".csv">
+                </div>
+                <div class="user-list">
+                    <h3>Usuarios Cargados</h3>
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Email</th>
+                                <th>Nombre</th>
+                                <th>Preferencias</th>
+                                <th>Acciones</th>
+                            </tr>
+                        </thead>
+                        <tbody id="user-table-body">
+                            <!-- Aquí se agregarán las filas de los usuarios cargados -->
+                        </tbody>
+                    </table>
+                </div>
+                <button id="downloadJsonButton" style="display: none;">Descargar JSON</button>
+                <button id="deleteAllButton">Eliminar Todos los Usuarios</button>
             </div>
         </div>
     </div>
-
-    <!-- JavaScript para manejar la navegación y acciones -->
+    <!-- Scripts -->
     <script>
+        // Manejo de la carga de archivos
+        const fileUploadInput = document.getElementById('file-upload');
+        const userTableBody = document.getElementById('user-table-body');
+        const downloadJsonButton = document.getElementById('downloadJsonButton');
 
-        let userList = [];
-        async function fetchUsers() {
-            try {
-                const response = await fetch('http://localhost:8080/api/v1/user/findAll');
-                if (!response.ok) {
-                    throw new Error(`HTTP error! status: ${response.status}`);
-                }
-                userList = await response.json();
-                displayUsers();
-            } catch (error) {
-                console.error('Error al obtener la lista de usuarios:', error);
+        // Cargar datos desde localStorage al iniciar
+        window.onload = function() {
+            const savedUsers = localStorage.getItem('userData');
+            if (savedUsers) {
+                const jsonData = JSON.parse(savedUsers);
+                updateUserTable(jsonData);
+                downloadJsonButton.style.display = 'block'; // Mostrar botón de descarga
             }
-        }
+        };
 
-        function displayUsers() {
-            const userTableBody = document.querySelector('#userTable tbody');
+        fileUploadInput.addEventListener('change', function() {
+            const file = fileUploadInput.files[0];
+            if (file && file.type === "text/csv" || file.name.endsWith(".csv")) {
+                const reader = new FileReader();
+                reader.onload = function(event) {
+                    const csvData = event.target.result.split('\n').slice(1); // Ignorar la primera fila (encabezados)
+                    const jsonData = csvData.map(row => {
+                        const [email, name, preferences] = row.split(',');
+                        return { email, name, preferences: preferences.trim() };
+                    }).filter(user => user.email); // Filtrar líneas vacías
+
+                    // Guardar datos en localStorage
+                    localStorage.setItem('userData', JSON.stringify(jsonData));
+                    updateUserTable(jsonData);
+                    downloadJsonButton.style.display = 'block'; // Mostrar botón de descarga
+                };
+                reader.readAsText(file);
+            }
+            // Limpiar el input
+            fileUploadInput.value = '';
+        });
+
+        function updateUserTable(jsonData) {
+            // Limpiar la tabla
             userTableBody.innerHTML = '';
-
-            userList.forEach(user => {
+            // Agregar los usuarios cargados desde el CSV
+            jsonData.forEach((user, index) => {
                 const row = document.createElement('tr');
                 row.innerHTML = `
-                    <td>${user.id}</td>
-                    <td>${user.name}</td>
                     <td>${user.email}</td>
-                    <td class="action-buttons">
-                        <button class="delete-button" onclick="deleteUser('${user.id}')">Eliminar</button>
+                    <td>${user.name}</td>
+                    <td>${user.preferences}</td>
+                    <td>
+                        <button class="delete-button" onclick="deleteUser(${index})">Eliminar</button>
                     </td>
                 `;
                 userTableBody.appendChild(row);
             });
         }
 
-        function deleteUser(userId) {
-            console.log(`Eliminando usuario con ID: ${userId}`);
+        function deleteUser(index) {
+            // Eliminar el usuario correspondiente
+            const savedUsers = JSON.parse(localStorage.getItem('userData'));
+            savedUsers.splice(index, 1); // Eliminar del array
+            localStorage.setItem('userData', JSON.stringify(savedUsers)); // Actualizar localStorage
+            updateUserTable(savedUsers); // Actualizar la tabla
         }
 
-        fetchUsers();
+        // Manejo de descarga del archivo JSON
+        document.getElementById('downloadJsonButton').addEventListener('click', function () {
+            const jsonBlob = new Blob([localStorage.getItem('userData')], { type: 'application/json' });
+            const url = URL.createObjectURL(jsonBlob);
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = 'userData.json';
+            document.body.appendChild(a);
+            a.click();
+            document.body.removeChild(a);
+            URL.revokeObjectURL(url);
+        });
 
-        function showSection(sectionId) {
-            document.getElementById('userList').classList.add('hidden');
-            document.getElementById('userDetail').classList.add('hidden');
-            document.getElementById('createUser').classList.add('hidden');
-            document.getElementById(sectionId).classList.remove('hidden');
-        }
-
-        function deleteUser(userId) {
-            if (confirm('¿Estás seguro de que deseas eliminar este usuario?')) {
-                alert('El usuario ' + userId + ' ha sido eliminado.');
-            }
-        }
-
-        showSection('userList');
+        // Manejo de eliminación de todos los usuarios
+        document.getElementById('deleteAllButton').addEventListener('click', function () {
+            localStorage.removeItem('userData'); // Eliminar del localStorage
+            userTableBody.innerHTML = ''; // Limpiar la tabla
+            downloadJsonButton.style.display = 'none'; // Ocultar el botón de descarga
+        });
     </script>
 </body>
 </html>
