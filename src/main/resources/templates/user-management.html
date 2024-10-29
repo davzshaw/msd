@@ -99,6 +99,8 @@
         }
         .user-list {
             margin-top: 20px;
+            word-wrap: break-word;
+            white-space: normal;
         }
         .user-list table {
             width: 100%;
@@ -106,18 +108,26 @@
             background-color: #fff;
             border-radius: 12px;
             overflow: hidden;
+            word-wrap: break-word;
+            white-space: normal;
         }
         .user-list th, .user-list td {
             padding: 15px;
             text-align: left;
             color: #555;
+            word-wrap: break-word;
+            white-space: normal;
         }
         .user-list th {
             background-color: var(--primary-color);
             color: #fff;
+            word-wrap: break-word;
+            white-space: normal;
         }
         .user-list tr:nth-child(even) {
             background-color: #f5f7fa;
+            word-wrap: break-word;
+            white-space: normal;
         }
         .delete-button {
             padding: 6px 12px;
@@ -231,17 +241,21 @@
             if (file && file.type === "text/csv" || file.name.endsWith(".csv")) {
                 const reader = new FileReader();
                 reader.onload = function(event) {
-                    const csvData = event.target.result.split('\n').slice(1); // Ignorar la primera fila (encabezados)
-                    const jsonData = csvData.map(row => {
-                        const [email, name, preferences] = row.split(',');
-                        return { email, name, preferences: preferences.trim() };
-                    }).filter(user => user.email); // Filtrar líneas vacías
+                const csvData = event.target.result.split('\n').slice(1); // Ignorar la primera fila (encabezados)
+                const jsonData = csvData.map(row => {
+                    const [email, name, preferences] = row.split(',');
+                    return {
+                        email: email ? email.trim() : "",
+                        name: name ? name.trim() : "",
+                        preferences: preferences ? preferences.trim() : ""
+                    };
+                }).filter(user => user.email); // Filtrar líneas vacías
 
-                    // Guardar datos en localStorage
-                    localStorage.setItem('userData', JSON.stringify(jsonData));
-                    updateUserTable(jsonData);
-                    downloadJsonButton.style.display = 'block'; // Mostrar botón de descarga
-                };
+                // Guardar datos en localStorage
+                localStorage.setItem('userData', JSON.stringify(jsonData));
+                updateUserTable(jsonData);
+                downloadJsonButton.style.display = 'block'; // Mostrar botón de descarga
+            };
                 reader.readAsText(file);
             }
             // Limpiar el input

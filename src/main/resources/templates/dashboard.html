@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="es"></html>
+<html lang="es">
 <head>
     <meta charset="UTF-8">
     <title>LogiAI</title>
@@ -129,11 +129,18 @@
             color: #bbb;
             font-size: 18px;
         }
+        canvas {
+            max-width: 1080px;
+            margin: auto;
+        }
+        .message {
+            text-align: center;
+            margin-top: 20px;
+            font-weight: bold;
+        }
+
     </style>
 </head>
-
-
-
 <body>
     <div class="sidebar">
         <div class="logo"><img style="width: 100px;" src="loguitopng.png" alt=""></div>
@@ -145,28 +152,76 @@
         </nav>
     </div>
     <div class="main-content">
-        <h2>Bienvenido a LogiAI, [Nombre de Usuario]</h2>
+        <h2>Bienvenido a LogiAI, <span id="userName">[Nombre de Usuario]</span></h2>
         <div class="predict-section">
-            <input type="date">
-            <button class="predict-button">Predecir Demanda</button>
+            <button class="predict-button">Mostrar Demanda</button>
         </div>
-        <div class="charts">
-            <div class="chart-card"><img src="chart1.png" alt=""></div>
-            <div class="chart-card"><img src="chart2.png" alt=""></div>
-            <div class="chart-card"><img src="chart3.png" alt=""></div>
-            <div class="chart-card"><img src="chart4.png" alt=""></div>
-        </div>
+        <canvas id="demandChart"></canvas>
+        <div class="message" id="demandMessage"></div>
     </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const userData = JSON.parse(localStorage.getItem('userData'));
+            if (userData && userData.name) {
+                document.getElementById('userName').textContent = userData.name;
+            }
+
+            document.querySelector('.predict-button').addEventListener('click', () => {
+                const pedidosData = JSON.parse(localStorage.getItem('pedidosData'));
+                displayDemandChart(pedidosData);
+            });
+        });
+
+        function displayDemandChart(data) {
+            const zonas = {};
+            const amounts = [];
+
+            // Agrupar y sumar ventas por zona
+            data.forEach(item => {
+                if (!zonas[item.zone]) {
+                    zonas[item.zone] = 0;
+                }
+                zonas[item.zone] += item.amount;
+                amounts.push(item.amount);
+            });
+
+            // Obtener la zona con mayor demanda
+            const maxZone = Object.keys(zonas).reduce((a, b) => zonas[a] > zonas[b] ? a : b);
+            const maxAmount = zonas[maxZone];
+
+            const chartData = {
+                labels: Object.keys(zonas),
+                datasets: [{
+                    label: 'Demanda por Zona',
+                    data: Object.values(zonas),
+                    backgroundColor: 'rgba(52, 152, 219, 0.5)',
+                    borderColor: 'rgba(52, 152, 219, 1)',
+                    borderWidth: 1,
+                }]
+            };
+
+            const ctx = document.getElementById('demandChart').getContext('2d');
+
+            new Chart(ctx, {
+                type: 'bar',
+                data: chartData,
+                options: {
+                    scales: {
+                        y: {
+                            beginAtZero: true,
+                            title: {
+                                display: true,
+                                text: 'Cantidad de Ventas'
+                            }
+                        }
+                    }
+                }
+            });
+
+            document.getElementById('demandMessage').textContent = `Con base a un análisis, la zona de mayor demanda es: ${maxZone} (${maxAmount} ventas)`;
+        }
+    </script>
 </body>
-
-<script>
-
-    document.querySelector('.predict-button').addEventListener('click', () => {
-        const userData = localStorage.getItem('userData');
-        const pedidosData = localStorage.getItem('pedidosData');
-        console.log(userData);
-        console.log(pedidosData);
-    });
-
-</script>
 </html>

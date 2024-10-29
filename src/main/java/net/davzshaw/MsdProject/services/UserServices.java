@@ -24,15 +24,7 @@ public class UserServices {
         user.setPassword(password);
         return userRepository.save(user);
     }
-
-    public void updatePreferencesByEmail(String email, String preferences) {
-        User user = userRepository.findByEmail(email);
-        if (user != null) {
-            user.setPreferences(preferences);
-            userRepository.save(user);
-        }
-    }
-
+    
     public void deleteByEmail(String email) {
         userRepository.deleteByEmail(email);
     }

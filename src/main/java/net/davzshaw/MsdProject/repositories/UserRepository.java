@@ -24,9 +24,4 @@ public interface UserRepository extends JpaRepository<User, Long> {
     @Transactional
     @Query("INSERT INTO User (name, email, password) VALUES (:name, :email, :password)")
     void createUser(@Param("name") String name, @Param("email") String email, @Param("password") String password);
-
-    @Modifying
-    @Transactional
-    @Query("UPDATE User u SET u.preferences = :preferences WHERE u.email = :email")
-    void updatePreferencesByEmail(@Param("email") String email, @Param("preferences") String preferences);
 }

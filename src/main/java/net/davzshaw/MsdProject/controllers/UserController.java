@@ -25,12 +25,6 @@ public class UserController {
         return ResponseEntity.ok(createdUser);
     }
 
-    @PostMapping("/updatePreferences")
-    public ResponseEntity<Void> updatePreferencesByEmail(@RequestParam String email, @RequestBody String preferences) {
-        this.userService.updatePreferencesByEmail(email, preferences);
-        return ResponseEntity.ok().build();
-    }
-
     @PostMapping("/delete")
     public ResponseEntity<Void> deleteByEmail(@RequestParam String email) {
         this.userService.deleteByEmail(email);

@@ -2,7 +2,7 @@
 <html lang="es">
 <head>
     <meta charset="UTF-8">
-    <title>Logistics AI - Panel de Control</title>
+    <title>Logistics AI - Data Management</title>
     <!-- Google Fonts -->
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
     <style>
@@ -172,40 +172,40 @@
     <div class="sidebar">
         <div class="logo"><img style="width: 100px;" src="loguitopng.png" alt=""></div>
         <nav>
-            <a href="dashboard.html">Panel de Control</a>
-            <a href="#"><b>Subir y gestionar datos</b></a>
-            <a href="user-management.html">Gestionar usuarios</a>
-            <a href="index.html">Cerrar Sesión</a>
+            <a href="dashboard.html">Dashboard</a>
+            <a href="#"><b>Data Management</b></a>
+            <a href="user-management.html">User Management</a>
+            <a href="index.html">Log Out</a>
         </nav>
     </div>
     <!-- Contenido Principal -->
     <div class="main-content">
         <!-- Sección de Gestión de Datos -->
         <div id="dataManagement" class="active">
-            <h2>Gestión de Datos</h2>
+            <h2>Data Management</h2>
             <div class="data-management">
                 <div class="upload-section">
-                    <label for="file-upload">Subir Archivo JSON o CSV</label>
+                    <label for="file-upload">Upload JSON or CSV File</label>
                     <input type="file" id="file-upload" accept=".json, .csv">
                 </div>
                 <div class="file-list">
-                    <h3>Datos Cargados</h3>
+                    <h3>Uploaded Data</h3>
                     <table>
                         <thead>
                             <tr>
-                                <th>Fecha</th>
-                                <th>Cantidad</th>
-                                <th>Zona</th>
-                                <th>Acciones</th>
+                                <th>Date</th>
+                                <th>Amount</th>
+                                <th>Zone</th>
+                                <th>Actions</th>
                             </tr>
                         </thead>
                         <tbody id="file-table-body">
-                            <!-- Aquí se agregarán las filas de los datos cargados -->
+                            <!-- Rows will be added here -->
                         </tbody>
                     </table>
                 </div>
-                <button id="downloadJsonButton" style="display: none;">Descargar JSON</button>
-                <button id="deleteAllButton">Eliminar Todo</button> <!-- Botón para eliminar todo -->
+                <button id="downloadJsonButton" style="display: none;">Download JSON</button>
+                <button id="deleteAllButton">Delete All</button>
             </div>
         </div>
     </div>
@@ -260,7 +260,7 @@
                     <td>${data.amount}</td>
                     <td>${data.zone}</td>
                     <td>
-                        <button class="delete-button" onclick="deleteDataRow(this)">Eliminar</button>
+                        <button class="delete-button" onclick="deleteDataRow(this)">Delete</button>
                     </td>
                 `;
                 fileTableBody.appendChild(row);
@@ -268,9 +268,20 @@
         }
 
         function deleteDataRow(button) {
-            // Eliminar la fila correspondiente a los datos
+            // Obtener los datos de la fila a eliminar
             const row = button.closest('tr');
+            const date = row.cells[0].textContent;
+            const amount = parseInt(row.cells[1].textContent);
+            const zone = row.cells[2].textContent;
+
+            // Eliminar la fila de la tabla
             row.parentNode.removeChild(row);
+
+            // Actualizar los datos en el localStorage
+            const savedData = JSON.parse(localStorage.getItem('pedidosData'));
+            const updatedData = savedData.filter(data => !(data.date === date && data.amount === amount && data.zone === zone));
+            localStorage.removeItem('pedidosData');
+            localStorage.setItem('pedidosData', JSON.stringify(updatedData));
         }
 
         // Manejo de descarga del archivo JSON
