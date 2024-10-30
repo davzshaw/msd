@@ -107,6 +107,53 @@
         .upload-section input[type="file"] {
             display: none;
         }
+        /* New Analyze Section */
+        .analyze-section {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            margin-bottom: 40px;
+        }
+        .analyze-button {
+            padding: 12px 30px;
+            background-color: var(--secondary-color);
+            color: #fff;
+            border: none;
+            border-radius: 8px;
+            font-size: 16px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+            margin-bottom: 10px;
+        }
+        .analyze-button:hover {
+            background-color: #e64a19;
+        }
+        .analyze-textbox {
+            display: none; /* Initially hidden */
+            margin-bottom: 20px;
+            width: 100%; /* Adjust width */
+            max-width: 500px; /* Optional max width */
+        }
+        .analyze-textbox textarea {
+            width: 100%;
+            padding: 12px;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            resize: vertical;
+        }
+        .submit-button {
+            padding: 12px 30px;
+            background-color: var(--primary-color);
+            color: #fff;
+            border: none;
+            border-radius: 8px;
+            font-size: 16px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+        .submit-button:hover {
+            background-color: #003d99;
+        }
         /* Charts */
         .charts {
             display: grid;
@@ -158,6 +205,17 @@
         </div>
         <canvas id="demandChart"></canvas>
         <div class="message" id="demandMessage"></div>
+        
+        <!-- New Analyze Section -->
+        <div class="analyze-section">
+            <button class="analyze-button">Analizar Clientes</button>
+            <label id="response1Label" style="display: none;padding-top: 24px;padding-bottom: 24px;">Generando respuesta...</label> <!-- Dummy Label -->
+            <div class="analyze-textbox">
+                <textarea id="customerInput" rows="4" placeholder="Introduce tu texto aquí..."></textarea>
+                <button class="submit-button" id="submitButton">Enviar</button>
+            </div>
+            <label id="response2Label" style="display: none;padding-top: 24px;padding-bottom: 24px;">Generando respuesta...</label> <!-- Dummy Label -->
+        </div>
     </div>
 
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
@@ -171,6 +229,21 @@
             document.querySelector('.predict-button').addEventListener('click', () => {
                 const sellData = JSON.parse(localStorage.getItem('sellData'));
                 displayDemandChart(sellData);
+            });
+
+            // New button for analyzing clients
+            document.querySelector('.analyze-button').addEventListener('click', () => {
+                document.querySelector('.analyze-textbox').style.display = 'block';
+                document.getElementById('response1Label').style.display = 'block'; // Show first label
+                document.getElementById('response2Label').style.display = 'block'; // Show second label
+            });
+
+            // Dummy function for submit button
+            document.getElementById('submitButton').addEventListener('click', () => {
+                const customerInput = document.getElementById('customerInput').value;
+                // Do something with customerInput if needed
+                console.log(customerInput); // Placeholder for actual implementation
+                document.getElementById('customerInput').value = ''; // Clear the input
             });
         });
 
