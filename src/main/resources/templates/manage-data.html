@@ -2,7 +2,7 @@
 <html lang="es">
 <head>
     <meta charset="UTF-8">
-    <title>Logistics AI - Data Management</title>
+    <title>msdAI - Gestión de datos</title>
     <!-- Google Fonts -->
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
     <style>
@@ -172,31 +172,31 @@
     <div class="sidebar">
         <div class="logo"><img style="width: 100px;" src="loguitopng.png" alt=""></div>
         <nav>
-            <a href="dashboard.html">Dashboard</a>
-            <a href="#"><b>Data Management</b></a>
-            <a href="user-management.html">User Management</a>
-            <a href="index.html">Log Out</a>
+            <a href="dashboard.html"><b>Panel de Control</b></a>
+            <a href="manage-data.html">Subir y gestionar Datos</a>
+            <a href="user-management.html">Gestionar Usuarios</a>
+            <a href="index.html">Cerrar Sesión</a>
         </nav>
     </div>
     <!-- Contenido Principal -->
     <div class="main-content">
         <!-- Sección de Gestión de Datos -->
         <div id="dataManagement" class="active">
-            <h2>Data Management</h2>
+            <h2>Gestión de datos</h2>
             <div class="data-management">
                 <div class="upload-section">
-                    <label for="file-upload">Upload JSON or CSV File</label>
+                    <label for="file-upload">Subir CSV</label>
                     <input type="file" id="file-upload" accept=".json, .csv">
                 </div>
                 <div class="file-list">
-                    <h3>Uploaded Data</h3>
+                    <h3>Datos cargados</h3>
                     <table>
                         <thead>
                             <tr>
-                                <th>Date</th>
-                                <th>Amount</th>
-                                <th>Zone</th>
-                                <th>Actions</th>
+                                <th>Fecha</th>
+                                <th>Cantidad</th>
+                                <th>Zona</th>
+                                <th>Acciones</th>
                             </tr>
                         </thead>
                         <tbody id="file-table-body">
@@ -204,8 +204,8 @@
                         </tbody>
                     </table>
                 </div>
-                <button id="downloadJsonButton" style="display: none;">Download JSON</button>
-                <button id="deleteAllButton">Delete All</button>
+                <button id="downloadJsonButton" style="display: none;">Descargar JSON</button>
+                <button id="deleteAllButton">Eliminar todo</button>
             </div>
         </div>
     </div>
@@ -218,7 +218,7 @@
 
         // Cargar datos desde localStorage al iniciar
         window.onload = function() {
-            const savedData = localStorage.getItem('pedidosData');
+            const savedData = localStorage.getItem('sellData');
             if (savedData) {
                 const jsonData = JSON.parse(savedData);
                 updateDataTable(jsonData);
@@ -238,7 +238,7 @@
                             return { date, amount: parseInt(amount), zone };
                         });
                         // Guardar datos en localStorage
-                        localStorage.setItem('pedidosData', JSON.stringify(jsonData));
+                        localStorage.setItem('sellData', JSON.stringify(jsonData));
                         updateDataTable(jsonData);
                         downloadJsonButton.style.display = 'block'; // Mostrar botón de descarga
                     };
@@ -260,7 +260,7 @@
                     <td>${data.amount}</td>
                     <td>${data.zone}</td>
                     <td>
-                        <button class="delete-button" onclick="deleteDataRow(this)">Delete</button>
+                        <button class="delete-button" onclick="deleteDataRow(this)">Eliminar</button>
                     </td>
                 `;
                 fileTableBody.appendChild(row);
@@ -278,19 +278,19 @@
             row.parentNode.removeChild(row);
 
             // Actualizar los datos en el localStorage
-            const savedData = JSON.parse(localStorage.getItem('pedidosData'));
+            const savedData = JSON.parse(localStorage.getItem('sellData'));
             const updatedData = savedData.filter(data => !(data.date === date && data.amount === amount && data.zone === zone));
-            localStorage.removeItem('pedidosData');
-            localStorage.setItem('pedidosData', JSON.stringify(updatedData));
+            localStorage.removeItem('sellData');
+            localStorage.setItem('sellData', JSON.stringify(updatedData));
         }
 
         // Manejo de descarga del archivo JSON
         document.getElementById('downloadJsonButton').addEventListener('click', function () {
-            const jsonBlob = new Blob([localStorage.getItem('pedidosData')], { type: 'application/json' });
+            const jsonBlob = new Blob([localStorage.getItem('sellData')], { type: 'application/json' });
             const url = URL.createObjectURL(jsonBlob);
             const a = document.createElement('a');
             a.href = url;
-            a.download = 'pedidosData.json';
+            a.download = 'sellData.json';
             document.body.appendChild(a);
             a.click();
             document.body.removeChild(a);
@@ -299,7 +299,7 @@
 
         // Manejo de eliminación de todos los datos
         document.getElementById('deleteAllButton').addEventListener('click', function () {
-            localStorage.removeItem('pedidosData'); // Eliminar del localStorage
+            localStorage.removeItem('sellData'); // Eliminar del localStorage
             fileTableBody.innerHTML = ''; // Limpiar la tabla
             downloadJsonButton.style.display = 'none'; // Ocultar el botón de descarga
         });

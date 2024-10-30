@@ -2,7 +2,7 @@
 <html lang="es">
 <head>
     <meta charset="UTF-8">
-    <title>Logistics AI - Gestión de Usuarios</title>
+    <title>msdAI - Gestión de Usuarios</title>
     <!-- Google Fonts -->
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
     <style>
@@ -182,7 +182,7 @@
     <div class="sidebar">
         <div class="logo"><img style="width: 100px;" src="loguitopng.png" alt=""></div>
         <nav>
-            <a href="#"><b>Panel de Control</b></a>
+            <a href="dashboard.html"><b>Panel de Control</b></a>
             <a href="manage-data.html">Subir y gestionar Datos</a>
             <a href="user-management.html">Gestionar Usuarios</a>
             <a href="index.html">Cerrar Sesión</a>
@@ -195,7 +195,7 @@
             <h2>Gestión de Usuarios</h2>
             <div class="user-management">
                 <div class="upload-section">
-                    <label for="file-upload">Subir Archivo CSV</label>
+                    <label for="file-upload">Subir CSV</label>
                     <input type="file" id="file-upload" accept=".csv">
                 </div>
                 <div class="user-list">
@@ -205,6 +205,7 @@
                             <tr>
                                 <th>Email</th>
                                 <th>Nombre</th>
+                                <th>Zona</th> <!-- Nueva columna para Zona -->
                                 <th>Preferencias</th>
                                 <th>Acciones</th>
                             </tr>
@@ -215,7 +216,7 @@
                     </table>
                 </div>
                 <button id="downloadJsonButton" style="display: none;">Descargar JSON</button>
-                <button id="deleteAllButton">Eliminar Todos los Usuarios</button>
+                <button id="deleteAllButton">Eliminar todo</button>
             </div>
         </div>
     </div>
@@ -238,24 +239,25 @@
 
         fileUploadInput.addEventListener('change', function() {
             const file = fileUploadInput.files[0];
-            if (file && file.type === "text/csv" || file.name.endsWith(".csv")) {
+            if (file && (file.type === "text/csv" || file.name.endsWith(".csv"))) {
                 const reader = new FileReader();
                 reader.onload = function(event) {
-                const csvData = event.target.result.split('\n').slice(1); // Ignorar la primera fila (encabezados)
-                const jsonData = csvData.map(row => {
-                    const [email, name, preferences] = row.split(',');
-                    return {
-                        email: email ? email.trim() : "",
-                        name: name ? name.trim() : "",
-                        preferences: preferences ? preferences.trim() : ""
-                    };
-                }).filter(user => user.email); // Filtrar líneas vacías
+                    const csvData = event.target.result.split('\n').slice(1); // Ignorar la primera fila (encabezados)
+                    const jsonData = csvData.map(row => {
+                        const [email, name, zone, preferences] = row.split(',');
+                        return {
+                            email: email ? email.trim() : "",
+                            name: name ? name.trim() : "",
+                            zone: zone ? zone.trim() : "", // Agregar el campo "zona"
+                            preferences: preferences ? preferences.trim() : ""
+                        };
+                    }).filter(user => user.email); // Filtrar líneas vacías
 
-                // Guardar datos en localStorage
-                localStorage.setItem('userData', JSON.stringify(jsonData));
-                updateUserTable(jsonData);
-                downloadJsonButton.style.display = 'block'; // Mostrar botón de descarga
-            };
+                    // Guardar datos en localStorage
+                    localStorage.setItem('userData', JSON.stringify(jsonData));
+                    updateUserTable(jsonData);
+                    downloadJsonButton.style.display = 'block'; // Mostrar botón de descarga
+                };
                 reader.readAsText(file);
             }
             // Limpiar el input
@@ -271,6 +273,7 @@
                 row.innerHTML = `
                     <td>${user.email}</td>
                     <td>${user.name}</td>
+                    <td>${user.zone}</td> <!-- Nueva columna para Zona -->
                     <td>${user.preferences}</td>
                     <td>
                         <button class="delete-button" onclick="deleteUser(${index})">Eliminar</button>

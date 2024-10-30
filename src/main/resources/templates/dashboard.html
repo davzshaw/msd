@@ -2,7 +2,7 @@
 <html lang="es">
 <head>
     <meta charset="UTF-8">
-    <title>LogiAI</title>
+    <title>msdIA</title>
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
     <style>
         :root {
@@ -145,14 +145,14 @@
     <div class="sidebar">
         <div class="logo"><img style="width: 100px;" src="loguitopng.png" alt=""></div>
         <nav>
-            <a href="#"><b>Panel de Control</b></a>
+            <a href="dashboard.html"><b>Panel de Control</b></a>
             <a href="manage-data.html">Subir y gestionar Datos</a>
             <a href="user-management.html">Gestionar Usuarios</a>
             <a href="index.html">Cerrar Sesión</a>
         </nav>
     </div>
     <div class="main-content">
-        <h2>Bienvenido a LogiAI, <span id="userName">[Nombre de Usuario]</span></h2>
+        <h2>Bienvenido a msdIA, <span id="userName">[Nombre de Usuario]</span></h2>
         <div class="predict-section">
             <button class="predict-button">Mostrar Demanda</button>
         </div>
@@ -169,8 +169,8 @@
             }
 
             document.querySelector('.predict-button').addEventListener('click', () => {
-                const pedidosData = JSON.parse(localStorage.getItem('pedidosData'));
-                displayDemandChart(pedidosData);
+                const sellData = JSON.parse(localStorage.getItem('sellData'));
+                displayDemandChart(sellData);
             });
         });
 
